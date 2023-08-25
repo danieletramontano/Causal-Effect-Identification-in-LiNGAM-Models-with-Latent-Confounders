@@ -16,15 +16,15 @@ iv_adj = np.array([[0,0,1,1],[0,0,1,0],[0,0,0,1],[0,0,0,0]])
 g = nx.DiGraph(iv_adj)
 nx.draw_networkx(g)
 
-latent = 0
-observed = 4
+latent = 1
+observed = 3
 n = 10000
 lambdas = [0,10]
 moms = [0,1]
 lr = 0.01
 epochs = 100
 w_init = 'given'
-pseudoinverse = True
+pseudoinverse = False
 withening = True
 
 data, params, W_with, w_true = hid_var_data(latent, observed, g ,n, withening)
