@@ -3,7 +3,7 @@
 """
 Created on Thu Aug 24 14:06:19 2023
 
-@author: daniele
+@author: 
 """
 
 import networkx as nx
