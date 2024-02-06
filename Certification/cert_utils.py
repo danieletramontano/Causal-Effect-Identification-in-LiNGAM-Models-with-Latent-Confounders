@@ -115,7 +115,7 @@ def check_pair_tce_id(graph=None,
 def full_graph_id(graph=None,
                   latent=0):
     """
-        - Checks identifiability of all the parameters in the graph.
+        - Checks the identifiability of all the parameters in the graph.
         - Parameters:
              - graph (networkx.DiGraph): Graph to analyze.
              - latent (int): Number of latent variables.
@@ -162,7 +162,7 @@ def full_graph_id(graph=None,
 def random_edge_id(graph=None,
                    latent=0):
     """
-       - Checks identifiability of a random edge in the graph.
+       - Checks the identifiability of the total causal effect associated to a random edge in the graph.
        - Parameters:
             - graph (networkx.DiGraph): Graph to analyze.
             - latent (int): Number of latent variables.
