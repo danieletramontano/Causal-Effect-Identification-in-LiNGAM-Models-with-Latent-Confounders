@@ -1,26 +1,7 @@
-<!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>      
-    </li>
-    <li>
-      <a href="#dependencies">Dependencies</a></li>      
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#authors">Authors</a></li>    
-  </ol>
-</details>
-
-
-
 <!-- ABOUT THE PROJECT -->
-## Anonymized Code and Data for '' Causal Effect Identification in LiNGAM Models with Latent Confounders''.
+# Anonymized Code and Data for '' Causal Effect Identification in LiNGAM Models with Latent Confounders''.
 
-<!-- GETTING STARTED -->
-## Getting Started
-
-### Dependencies
+## Dependencies
 Recreate environment:
 
   ```sh
