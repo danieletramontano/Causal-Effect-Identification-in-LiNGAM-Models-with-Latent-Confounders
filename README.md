@@ -25,5 +25,3 @@ See `LICENSE` for more information.
 ## Authors
 
 Anonymous
-
-## Thank you
