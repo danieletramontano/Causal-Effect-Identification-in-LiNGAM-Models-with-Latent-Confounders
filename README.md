@@ -11,7 +11,8 @@ Recreate environment:
 <!-- USAGE EXAMPLES -->
 ## Usage
 ### Identifiability Certification
-See the Jupiter Notebook ''Certification/Identifiability_plots.ipynb''
+- The code to run the algorithms described in the paper can be found in ''Certification/cert_utils.ipynb''.
+- To reproduce the figures in the paper, please see the Jupiter Notebook ''Certification/Identifiability_plots.ipynb''.
 ### Causal Effect Estimation
 
 
