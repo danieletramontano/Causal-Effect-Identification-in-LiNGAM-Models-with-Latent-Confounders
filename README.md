@@ -39,17 +39,6 @@ Recreate environment:
   conda env create -f requirements.yml
   ```
 
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/catiaspsilva/README-template.git
-   ```
-2. Setup (and activate) your environment
-  ```sh
-  conda env create -f requirements.yml
-  ```
-
 <!-- USAGE EXAMPLES -->
 ## Usage
 
