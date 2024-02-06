@@ -19,7 +19,7 @@ Recreate environment:
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+See `LICENSE` for more information.
 
 <!-- Authors -->
 ## Authors
