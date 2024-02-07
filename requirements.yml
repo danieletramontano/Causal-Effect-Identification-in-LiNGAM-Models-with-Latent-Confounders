@@ -497,4 +497,4 @@ dependencies:
       - tzlocal==5.2
       - wheel==0.42.0
       - yarl==1.9.4
-prefix: /Users/daniele/anaconda3
+prefix: 
