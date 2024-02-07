@@ -471,7 +471,6 @@ dependencies:
       - lightning==2.1.3
       - lightning-utilities==0.10.1
       - linear-operator==0.5.2
-      - lingam==1.8.1
       - mpmath==1.2.1
       - multidict==6.0.4
       - multiprocess==0.70.15
