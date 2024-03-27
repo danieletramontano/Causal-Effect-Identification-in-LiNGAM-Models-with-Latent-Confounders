@@ -136,6 +136,126 @@ def tyc20(Z, W, D, Y):
     return reg2.coef_[0]
 
 
+def graphical_rica_2(withening = True,
+            pseudoinv = False,
+            latent = 2,
+            observed = 4,
+            graph = None,
+            data = None,
+            mom = 0,
+            lambda_reg = 0,
+            epochs = 2000,
+            lr = 0.1,
+            w_init = 'random',
+            w_true = torch.zeros(5),
+            cti_sd = 1,
+            batch_size = 0,
+            smoothing = False,
+            use_scheduler = True):
+
+
+    data = data - data.mean(0)
+    data_cov = (data.t()).cov()
+    n_size = data.shape[0]
+
+    if withening == True:
+        U, S, V = data_cov.svd()
+        S_2=torch.inverse(torch.diag(S.sqrt()))
+        W_with = S_2.matmul(V.t())
+        data = W_with.matmul(data.t()).t()
+    else:
+        W_with = torch.eye(observed)
+
+    if smoothing is True:
+        s1l = SmoothL1Loss(beta = 0.5)
+        s1l_target = torch.zeros(data_cov.size()[0], latent+observed)
+        
+    loss_data = torch.zeros(epochs)
+    w_data = torch.zeros(len(graph.edges()),epochs)
+
+
+
+    if w_init == 'random':
+        weight = Parameter(torch.Tensor(len(graph.edges())).normal_(0,4))
+    elif w_init == 'cov_guess':
+        w, mask = init_w_guess_(data, graph, latent, W_with)
+        weight = Parameter(w[mask == 1])
+        fix_weight = w[mask == 0]
+        c_list = count_lists(mask)
+    else:
+        weight = Parameter(torch.clone(w_true).detach().requires_grad_(True))
+
+
+
+    optimizer = torch.optim.RMSprop([weight], lr, momentum=mom)
+    #scheduler = StepLR(optimizer, step_size=250, gamma=0.1)
+    if use_scheduler is True:
+        scheduler = CosineAnnealingLR(optimizer, T_max = 200)
+
+    
+        
+    for epoch in range(epochs):
+
+        adj = torch.eye(len(graph.nodes()))
+        if w_init == 'cov_guess':
+            for ii, e in enumerate(graph.edges()):
+                if mask[ii] == 1:
+                    adj[e]=-weight[int(c_list[ii])]
+                else:
+                    adj[e]=-fix_weight[int(c_list[ii])]
+        else:
+            for e in range(len(graph.edges())):
+                adj[list(graph.edges)[e]]=-weight[e]
+
+        B = (torch.inverse(adj)).t()
+        B = B[latent:latent+observed,:]
+        B = W_with.matmul(B)
+
+        if pseudoinv == True:
+            BB = ((B.matmul(B.t())).inverse()).matmul(B)
+        else:
+            BB = B
+            
+        if batch_size > 0:
+            batch = np.random.choice(n_size, min(n_size, batch_size), replace=False)
+            data_batch = data[batch, ]
+        else:
+            data_batch = data
+        latents = data_batch.matmul(BB)
+        
+        if smoothing is True:
+            loss_latent = s1l(latents, s1l_target)
+        else:
+            loss_latent = latents.abs().mean()
+        
+        if lambda_reg > 0:
+            output = latents.matmul(BB.t())
+            diff = output - data_batch
+            loss_recon = (diff * diff).mean()                
+        else:
+            loss_recon = 0        
+        
+        loss = lambda_reg * loss_recon + loss_latent
+        
+
+        loss_data[epoch] =  (loss.data).detach().item()
+
+
+        if  w_init == 'cov_guess':
+            w_data[mask==1, epoch] = weight.detach()
+            w_data[mask==0, epoch] = fix_weight
+        else:
+            w_data[:, epoch] = weight.detach()
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()           
+        if use_scheduler is True:
+            scheduler.step()
+
+    return loss_data, w_data
+
+
 def graphical_rica(latent, observed, g, data, data_whitening, epochs, lr, W_w, w_init, w_true, momentum=0, lmbda=0):
     
     """
