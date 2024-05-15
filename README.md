@@ -1,5 +1,5 @@
 <!-- ABOUT THE PROJECT -->
-# Anonymized Code and Data for '' Causal Effect Identification in LiNGAM Models with Latent Confounders''.
+# Code and Data for '' Causal Effect Identification in LiNGAM Models with Latent Confounders''.
 
 ## Dependencies
 Recreate environment:
