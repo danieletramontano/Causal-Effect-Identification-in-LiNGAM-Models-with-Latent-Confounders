@@ -28,5 +28,4 @@ See `LICENSE` for more information.
 
 <!-- Authors -->
 ## Authors
-
-Anonymous
+Daniele Tramontano, Yaroslav Kivva, Saber Salehkaleybar, Mathias Drton, Negar Kiyavash.
